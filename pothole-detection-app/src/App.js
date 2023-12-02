@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import { Icon } from 'leaflet';
+
 function App() {
   const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
   const [markers, setMarkers] = useState([]);
@@ -25,19 +28,36 @@ function App() {
         <h1>Pothole Map</h1>
         <input type="file" onChange={handleFileUpload} />
         <div style={{ height: '500px' }}>
-          <MapContainer
-            center={[51.505, -0.09]}
-            zoom={13}
-            scrollWheelZoom={false}
-          >
+          <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={false}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={[51.505, -0.09]}>
+            <Marker
+              position={mapCenter}
+              icon={
+                new Icon({
+                  iconUrl: markerIconPng,
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                })
+              }
+            >
               <Popup>
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
+            </Marker>
+            <Marker
+              position={[52.0, -1.0]}
+              icon={
+                new Icon({
+                  iconUrl: markerIconPng,
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                })
+              }
+            >
+              <Popup>New popup for testing</Popup>
             </Marker>
           </MapContainer>
         </div>
