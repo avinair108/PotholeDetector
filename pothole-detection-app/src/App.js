@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
+// App.js
+import React from 'react';
 import './App.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import { Icon } from 'leaflet';
+import YOLOComponent from './YOLO';
+import logo from './logo.png';
 
 function App() {
-  const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
-  const [markers, setMarkers] = useState([]);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // You can perform additional tasks with the uploaded file if needed
-      console.log('Uploaded file:', file);
-    }
-  };
-
-  const handleMapClick = (event) => {
-    const { lat, lng } = event.latlng;
-    setMarkers([...markers, { lat, lng }]);
-  };
+  const [mapCenter] = React.useState([51.505, -0.09]);
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Pothole Map</h1>
-        <input type="file" onChange={handleFileUpload} />
+        <YOLOComponent /> {/* Render the YOLOComponent here */}
         <div style={{ height: '500px' }}>
           <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={false}>
             <TileLayer
@@ -44,20 +33,9 @@ function App() {
               }
             >
               <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                <p>Low Danger</p>
+                <img src={logo} width={100} height={100} alt="react logo" />
               </Popup>
-            </Marker>
-            <Marker
-              position={[52.0, -1.0]}
-              icon={
-                new Icon({
-                  iconUrl: markerIconPng,
-                  iconSize: [25, 41],
-                  iconAnchor: [12, 41],
-                })
-              }
-            >
-              <Popup>New popup for testing</Popup>
             </Marker>
           </MapContainer>
         </div>
